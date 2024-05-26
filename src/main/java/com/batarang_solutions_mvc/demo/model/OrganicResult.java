@@ -18,7 +18,7 @@ public class OrganicResult {
     private String snippet;
 
     @JsonProperty("publication_info")
-    @OneToOne("cascade = CascadeType.ALL")
+    @OneToOne(cascade = CascadeType.ALL)
     private PublicationInfo publicationInfo;
 
     public Long getId() {
