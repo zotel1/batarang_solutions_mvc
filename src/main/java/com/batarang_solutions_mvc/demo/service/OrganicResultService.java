@@ -28,6 +28,33 @@ public class OrganicResultService {
                 .collect(Collectors.toList());
     }
 
+    public List<OrganicResult> findTop10() {
+        return organicResultRepository.findAll().stream()
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
+    // implementar la logica
+    public List<OrganicResult> findByPositionAndAuthorAndSummary(int position) {
+        return organicResultRepository.findByPosition(position).stream()
+                .map(result -> new OrganicResult(result.getPosition(), result.getPublicationInfo().getAuthors(), result.getPublicationInfo().getSummary()))
+                .collect(Collectors.toList());
+    }
+
+    public List<OrganicResult> findByPositionAndAuthorTitle(int position) {
+        return organicResultRepository.findByPosition(position).stream()
+                .map(result -> new OrganicResult(result.getPosition(), result.getPublicationInfo().getAuthors(), result.getTitle()))
+                .collect(Collectors.toList());
+    }
+
+
+    public List<OrganicResult> findByPositionAndSnippet(int position) {
+        return organicResultRepository.findByPosition(position).stream()
+                .map(result -> new OrganicResult(result.getPosition(), result.getSnippet()))
+                .collect(Collectors.toList());
+
+    }
+
     public void fetchAndSaveData() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://serpapi.com/search?engine=google_scholar&q=ciencia&api_key=";
