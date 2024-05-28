@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/organic-results")
 public class OrganicResultController {
 
     @Autowired
     private OrganicResultService organicResultService;
 
-    @GetMapping("/fetch-data")
+   // @GetMapping("/fetch-data")
+   @GetMapping("/fetch-and-save")
     public String fetchData() {
         organicResultService.fetchAndSaveData();
         return "Data fetched and saved successfully!";
@@ -32,25 +31,26 @@ public class OrganicResultController {
     }
 
 
-    @GetMapping("/authors/top10")
-    public List<Author> getTop10Authors() {
-        return organicResultService.findTop10().stream()
-                .flatMap(result -> result.getPublicationInfo().getAuthors().stream())
-                .collect(Collectors.toList());
+    @GetMapping("/top10")
+    public List<OrganicResult> getTop1OrganicResults() {
+        return organicResultService.findTop10();
+        //return organicResultService.findTop10().stream()
+          //      .flatMap(result -> result.getPublicationInfo().getAuthors().stream())
+            //    .collect(Collectors.toList());
     }
 
-    @GetMapping("/authors/{position}/summary")
-    public List<OrganicResult> getPositionAuthorSummary(@PathVariable int position) {
+    @GetMapping("/authors/summary/{position}")
+    public List<OrganicResult> getByPositionAndAuthorSummary(@PathVariable int position) {
         return organicResultService.findByPositionAndAuthorAndSummary(position);
     }
 
-    @GetMapping("/authors/{position}/title")
-    public List<OrganicResult> getPositionAuthorTitle(@PathVariable int position) {
+    @GetMapping("/authors/title/{position}")
+    public List<OrganicResult> getByPositionAndAuthorTitle(@PathVariable int position) {
         return organicResultService.findByPositionAndAuthorTitle(position);
     }
 
-    @GetMapping("/authors/{position}/snippet")
-    public List<OrganicResult> getPositionSnippet(@PathVariable int position) {
+    @GetMapping("/authors/snippet/{position}")
+    public List<OrganicResult> getByPositionAndSnippet(@PathVariable int position) {
         return organicResultService.findByPositionAndSnippet(position);
     }
 }

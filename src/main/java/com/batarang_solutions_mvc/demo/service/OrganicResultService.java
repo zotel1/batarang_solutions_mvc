@@ -4,13 +4,12 @@ import com.batarang_solutions_mvc.demo.model.Author;
 import com.batarang_solutions_mvc.demo.model.OrganicResult;
 import com.batarang_solutions_mvc.demo.model.OrganicResultsResponse;
 import com.batarang_solutions_mvc.demo.repository.OrganicResultRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +23,7 @@ public class OrganicResultService {
     public List<Author> findAuthorsByPosition(int position) {
         List<OrganicResult> results = organicResultRepository.findByPosition(position);
         return results.stream()
+                .limit(10)
                 .flatMap(result -> result.getPublicationInfo().getAuthors().stream())
                 .collect(Collectors.toList());
     }

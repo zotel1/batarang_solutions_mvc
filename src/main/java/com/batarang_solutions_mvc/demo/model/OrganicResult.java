@@ -4,10 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrganicResult {
 
+    public OrganicResult() {}
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "organic_result_id")
+    private  List<Author> authors;
+    private  String summary;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +28,28 @@ public class OrganicResult {
     @JsonProperty("publication_info")
     @OneToOne(cascade = CascadeType.ALL)
     private PublicationInfo publicationInfo;
+
+    public OrganicResult(int position, List<Author> authors, String summary) {
+        this.position = position;
+        this.authors = authors;
+        this.summary = summary;
+
+    }
+
+
+    public OrganicResult(List<Author> authors, String summary, int position, String snippet) {
+        this.authors = authors;
+        this.summary = summary;
+        this.position = position;
+        this.snippet = snippet;
+    }
+
+
+    public OrganicResult(int position, String snippet) {
+        this.position = position;
+        this.snippet = snippet;
+    }
+
 
     public Long getId() {
         return id;
