@@ -1,6 +1,5 @@
 package com.batarang_solutions_mvc.demo.service;
 
-import com.batarang_solutions_mvc.demo.model.Author;
 import com.batarang_solutions_mvc.demo.model.OrganicResult;
 import com.batarang_solutions_mvc.demo.model.OrganicResultsResponse;
 import com.batarang_solutions_mvc.demo.repository.OrganicResultRepository;
@@ -20,12 +19,14 @@ public class OrganicResultService {
     @Autowired
     private OrganicResultRepository organicResultRepository;
 
-    public List<Author> findAuthorsByPosition(int position) {
-        List<OrganicResult> results = organicResultRepository.findByPosition(position);
-        return results.stream()
-                .limit(10)
-                .flatMap(result -> result.getPublicationInfo().getAuthors().stream())
-                .collect(Collectors.toList());
+    public List<OrganicResult> findAuthorsByPosition(int position) {
+
+        return organicResultRepository.findByPosition(position);
+        // List<OrganicResult> results = organicResultRepository.findByPosition(position);
+       // return results.stream()
+         //       .limit(10)
+           //     .flatMap(result -> result.getPublicationInfo().getAuthors().stream())
+             //   .collect(Collectors.toList());
     }
 
     public List<OrganicResult> findTop10() {
@@ -36,22 +37,25 @@ public class OrganicResultService {
 
     // implementar la logica
     public List<OrganicResult> findByPositionAndAuthorAndSummary(int position) {
-        return organicResultRepository.findByPosition(position).stream()
-                .map(result -> new OrganicResult(result.getPosition(), result.getPublicationInfo().getAuthors(), result.getPublicationInfo().getSummary()))
-                .collect(Collectors.toList());
+        return organicResultRepository.findByPosition(position);
+       // return organicResultRepository.findByPosition(position).stream()
+         //       .map(result -> new OrganicResult(result.getPosition(), result.getPublicationInfo().getAuthors(), result.getPublicationInfo().getSummary()))
+           //     .collect(Collectors.toList());
     }
 
     public List<OrganicResult> findByPositionAndAuthorTitle(int position) {
-        return organicResultRepository.findByPosition(position).stream()
-                .map(result -> new OrganicResult(result.getPosition(), result.getPublicationInfo().getAuthors(), result.getTitle()))
-                .collect(Collectors.toList());
+
+        return organicResultRepository.findByPosition(position);
+        //  return organicResultRepository.findByPosition(position).stream()
+        ////      .collect(Collectors.toList());
     }
 
 
     public List<OrganicResult> findByPositionAndSnippet(int position) {
-        return organicResultRepository.findByPosition(position).stream()
-                .map(result -> new OrganicResult(result.getPosition(), result.getSnippet()))
-                .collect(Collectors.toList());
+        return organicResultRepository.findByPosition(position);
+        //.stream()
+         //       .map(result -> new OrganicResult(result.getPosition(), result.getSnippet()))
+           //     .collect(Collectors.toList());
 
     }
 
