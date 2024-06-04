@@ -32,7 +32,7 @@ public class OrganicResultController {
 
 
     @GetMapping("/top10")
-    public List<OrganicResult> getTop1OrganicResults() {
+    public List<PublicationInfoDTO> getTop1OrganicResults() {
         return organicResultService.findTop10();
         //return organicResultService.findTop10().stream()
           //      .flatMap(result -> result.getPublicationInfo().getAuthors().stream())
@@ -40,17 +40,17 @@ public class OrganicResultController {
     }
 
     @GetMapping("/authors/summary/{position}")
-    public List<OrganicResult> getByPositionAndAuthorSummary(@PathVariable int position) {
+    public List<PublicationInfoDTO> getByPositionAndAuthorSummary(@PathVariable int position) {
         return organicResultService.findByPositionAndAuthorAndSummary(position);
     }
 
     @GetMapping("/authors/title/{position}")
-    public List<OrganicResult> getByPositionAndAuthorTitle(@PathVariable int position) {
+    public List<PublicationInfoDTO> getByPositionAndAuthorTitle(@PathVariable int position) {
         return organicResultService.findByPositionAndAuthorTitle(position);
     }
 
     @GetMapping("/authors/snippet/{position}")
-    public List<OrganicResult> getByPositionAndSnippet(@PathVariable int position) {
+    public List<PublicationInfoDTO> getByPositionAndSnippet(@PathVariable int position) {
         return organicResultService.findByPositionAndSnippet(position);
     }
 }
