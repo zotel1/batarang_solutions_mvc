@@ -63,6 +63,7 @@ public class OrganicResultService {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://serpapi.com/search?engine=google_scholar&q=ciencia&api_key=";
 
+
         String jsonResponse = restTemplate.getForObject(url, String.class);
 
         try {
