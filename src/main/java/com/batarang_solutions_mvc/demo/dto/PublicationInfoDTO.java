@@ -18,6 +18,13 @@ public class PublicationInfoDTO {
         this.title = title;
     }
 
+    // Constructor sin titulo
+    public PublicationInfoDTO(int position, String summary, List<Author> authors) {
+        this.position = position;
+        this.summary = summary;
+        this.authors = authors;
+    }
+
     // Getters y Setters
     public int getPosition() {
         return position;

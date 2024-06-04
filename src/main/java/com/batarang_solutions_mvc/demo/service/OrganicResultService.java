@@ -7,6 +7,7 @@ import com.batarang_solutions_mvc.demo.model.OrganicResultsResponse;
 import com.batarang_solutions_mvc.demo.repository.OrganicResultRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,7 +41,7 @@ public class OrganicResultService {
                 .map(result -> {
                     String summary = result.getPublicationInfo().getSummary();
                     List<Author> authors = result.getPublicationInfo().getAuthors();
-                    return new PublicationInfoDTO(result.getPosition(), summary, authors, null); // title is null here
+                    return new PublicationInfoDTO(result.getPosition(), summary, authors); // title is null here
                 })
                 .collect(Collectors.toList());
     }
@@ -91,7 +92,7 @@ public class OrganicResultService {
                 .map(result -> {
                     String summary = result.getPublicationInfo().getSummary();
                     List<Author> authors = result.getPublicationInfo().getAuthors();
-                    return new PublicationInfoDTO(result.getPosition(), summary, authors, null); // title is null here
+                    return new PublicationInfoDTO(result.getPosition(), summary, authors); // title is null here
                 })
                 .collect(Collectors.toList());
     }
@@ -161,7 +162,7 @@ public class OrganicResultService {
                 .map(result -> {
                     String snippet = result.getSnippet();
                     List<Author> authors = result.getPublicationInfo().getAuthors();
-                    return new PublicationInfoDTO(result.getPosition(), snippet, authors, null); // title is null here
+                    return new PublicationInfoDTO(result.getPosition(), snippet, authors); // title is null here
                 })
                 .collect(Collectors.toList());
     }
@@ -169,19 +170,19 @@ public class OrganicResultService {
 
     public void fetchAndSaveData() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://serpapi.com/search?engine=google_scholar&q=ciencia&api_key=";
-        //0a7f9bd044bb822ed6f3ae5a254d75e457cdc399e66257ca84eff292af3f1a0e";
+        String url = "https://serpapi.com/search?engine=google_scholar&q=ciencia&api_key=0a7f9bd044bb822ed6f3ae5a254d75e457cdc399e66257ca84eff292af3f1a0e";
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-           // List<OrganicResult> results = objectMapper.readValue(jsonResponse, new TypeReference<List<OrganicResult>>() {
-           // });
+
             OrganicResultsResponse response = objectMapper.readValue(jsonResponse, OrganicResultsResponse.class);
             List<OrganicResult> results = response.getOrganicResults();
             organicResultRepository.saveAll(results);
 
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Error: Ya existe un registro con el mismo dato.");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -15,15 +15,25 @@ public class OrganicResult {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "organic_result_id")
     private  List<Author> authors;
+
+    @Column(unique = true)
     private  String summary;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private int position;
+
+    @Column(unique = true)
     private String title;
+
+    @Column(unique = true)
     private String link;
+
+    @Column(unique = true)
     private String snippet;
+
 
     @JsonProperty("publication_info")
     @OneToOne(cascade = CascadeType.ALL)
