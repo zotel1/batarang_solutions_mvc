@@ -1,5 +1,6 @@
 package com.batarang_solutions_mvc.demo.controller;
 
+import com.batarang_solutions_mvc.demo.dto.PublicationInfoDTO;
 import com.batarang_solutions_mvc.demo.model.OrganicResult;
 import com.batarang_solutions_mvc.demo.service.OrganicResultService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class OrganicResultController {
     }
 
     @GetMapping("/authors/position/{position}")
-    public List<OrganicResult> getAuthorsByPosition(@PathVariable int position) {
+    public List<PublicationInfoDTO> getAuthorsByPosition(@PathVariable int position) {
         return organicResultService.findAuthorsByPosition(position);
     }
 
