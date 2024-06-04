@@ -170,7 +170,8 @@ public class OrganicResultService {
 
     public void fetchAndSaveData() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://serpapi.com/search?engine=google_scholar&q=ciencia&api_key=0a7f9bd044bb822ed6f3ae5a254d75e457cdc399e66257ca84eff292af3f1a0e";
+        String url = "https://serpapi.com/search?engine=google_scholar&q=ciencia&api_key=";
+        //0a7f9bd044bb822ed6f3ae5a254d75e457cdc399e66257ca84eff292af3f1a0e";
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
 
