@@ -14,6 +14,7 @@ public class PublicationInfo {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String summary;
 
     @OneToMany(cascade = CascadeType.ALL)
